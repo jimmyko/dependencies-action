@@ -62,7 +62,7 @@ async function run() {
         const myToken = process.env.GITHUB_TOKEN;
         const octokit = github.getOctokit(myToken);
 
-        const { data: pullRequest } = await octokit.pulls.get({
+        const { data: pullRequest } = await octokit.rest.pulls.get({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
             pull_number: github.context.issue.number,
@@ -75,7 +75,7 @@ async function run() {
 
         core.info('\nReading PR body...');
         const lines = pullRequest.body.split(/\r\n|\r|\n/);
-        
+
         var dependencies = [];
         lines.forEach(l => {
             var dependency = getDependency(l);
